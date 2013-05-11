@@ -47,7 +47,23 @@ def processPanAndZooms
 			y_prev = nil
 			timestamp_orig_prev = nil
 			timestamp_prev = nil
-			last_time = $panzoom_events.last[:timestamp].to_f
+			last_time = nil
+			if $panzoom_events.empty?
+				BigBlueButton.logger.info("No panzoom events; synthesizing one")
+				timestamp_orig = $slides_events.first[:timestamp].to_f + 1000
+				timestamp = ((timestamp_orig - $join_time) / 1000).round(1)
+				$xml.event(:timestamp => timestamp, :orig => timestamp_orig) do
+					$xml.viewBox "0 0 #{$vbox_width} #{$vbox_height}"
+				end
+				timestamp_orig_prev = timestamp_orig
+				timestamp_prev = timestamp
+				h_ratio_prev = 100
+				w_ratio_prev = 100
+				x_prev = 0
+				y_prev = 0
+			else
+				last_time = $panzoom_events.last[:timestamp].to_f
+			end
 			$panzoom_events.each do |panZoomEvent|
 				# Get variables
 				timestamp_orig = panZoomEvent[:timestamp].to_f
@@ -95,6 +111,17 @@ def processPanAndZooms
 				x_prev = x
 				y_prev = y
 			end
+			$xml.event(:timestamp => timestamp_prev, :orig => timestamp_orig_prev) do
+	                        $ss.each do |key,val|
+        		                $val = val
+                        		if key === timestamp_prev
+                                        $vbox_width = $val[0]
+                                        $vbox_height = $val[1]
+                                end
+                          end
+                          $xml.viewBox "#{($vbox_width-((1-((x_prev.to_f.abs)*$magic_mystery_number/100.0))*$vbox_width))} #{($vbox_height-((1-((y_prev.to_f.abs)*$magic_mystery_number/100.0))*$vbox_height)).round(2)} #{((w_ratio_prev.to_f/100.0)*$vbox_width).round(1)} #{((h_ratio_prev.to_f/100.0)*$vbox_height).round(1)}"
+                        end
+
 		end
 	end
 	BigBlueButton.logger.info("Finished creating panzooms.xml")
@@ -659,7 +686,6 @@ puts $playback
 if ($playback == "presentation")
 	logger = Logger.new("/var/log/bigbluebutton/presentation/publish-#{$meeting_id}.log", 'daily' )
 	BigBlueButton.logger = logger
-  BigBlueButton.logger.info("RUNNING SLIDES_NEW.RB - Publishing #{$meeting_id}")
 	# This script lives in scripts/archive/steps while properties.yaml lives in scripts/
 	bbb_props = YAML::load(File.open('../../core/scripts/bigbluebutton.yml'))
 	simple_props = YAML::load(File.open('presentation.yml'))
@@ -681,6 +707,7 @@ if ($playback == "presentation")
 		BigBlueButton.logger.info("Making dir package_dir")
 		FileUtils.mkdir_p package_dir
 
+		begin
 		audio_dir = "#{package_dir}/audio"
 		BigBlueButton.logger.info("Making audio dir")
 		FileUtils.mkdir_p audio_dir
@@ -785,12 +812,14 @@ if ($playback == "presentation")
 
 		BigBlueButton.logger.info("Removing published files.")
 		FileUtils.rm_r(Dir.glob("#{target_dir}/*"))
+                rescue  Exception => e
+                        BigBlueButton.logger.error(e.message)
+                end
 	else
 		BigBlueButton.logger.info("#{target_dir} is already there")
 	end
 end
 
-performance_end = Time.now
 
 
 

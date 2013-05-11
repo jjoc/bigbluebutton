@@ -84,7 +84,7 @@ package org.bigbluebutton.main.model.users
 		[Bindable] public var room:String = "";
 		[Bindable] public var authToken:String = "";
 		[Bindable] public var selected:Boolean = false;
-		[Bindable] public var voiceUserid:Number;
+		[Bindable] public var voiceUserid:Number = 0;
 		
 		private var _voiceMuted:Boolean = false;
 		[Bindable]
@@ -111,7 +111,7 @@ package org.bigbluebutton.main.model.users
 		[Bindable] public var customdata:Object = {};
 		
 		/*
-		 * This variable is for accessibility for the Participants Window. It can't be manually set
+		 * This variable is for accessibility for the Users Window. It can't be manually set
 		 * and only changes when one of the relevant status variables changes. Use the verifyUserStatus
 		 * method to update the value.
 		 *			Chad
@@ -124,17 +124,17 @@ package org.bigbluebutton.main.model.users
 		private function set userStatus(s:String):void {}
 		private function verifyUserStatus():void {
 			if (presenter)
-				_userStatus = ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.statusItemRenderer.presenter');
+				_userStatus = ResourceUtil.getInstance().getString('bbb.users.usersGrid.statusItemRenderer.presenter');
 			else if (role == Role.MODERATOR)
-				_userStatus = ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.statusItemRenderer.moderator');
+				_userStatus = ResourceUtil.getInstance().getString('bbb.users.usersGrid.statusItemRenderer.moderator');
 			else if (raiseHand)
-				_userStatus = ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.statusItemRenderer.handRaised');
+				_userStatus = ResourceUtil.getInstance().getString('bbb.users.usersGrid.statusItemRenderer.handRaised');
 			else
-				_userStatus = ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.statusItemRenderer.viewer');
+				_userStatus = ResourceUtil.getInstance().getString('bbb.users.usersGrid.statusItemRenderer.viewer');
 		}
 		
 		/*
-		* This variable is for accessibility for the Participants Window. It can't be manually set
+		* This variable is for accessibility for the Users Window. It can't be manually set
 		* and only changes when one of the relevant media variables changes. Use the verifyMedia
 		* method to update the value.
 		*			Chad
@@ -146,10 +146,10 @@ package org.bigbluebutton.main.model.users
 		}
 		private function set media(m:String):void {}
 		private function verifyMedia():void {
-			_media = (hasStream ? ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.mediaItemRenderer.webcam') + " " : "") + 
-					(!voiceJoined ? ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.mediaItemRenderer.noAudio') : 
-									(voiceMuted ? ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.mediaItemRenderer.micOff') : 
-												  ResourceUtil.getInstance().getString('bbb.participants.participantsGrid.mediaItemRenderer.micOn')));
+			_media = (hasStream ? ResourceUtil.getInstance().getString('bbb.users.usersGrid.mediaItemRenderer.webcam') + " " : "") + 
+					(!voiceJoined ? ResourceUtil.getInstance().getString('bbb.users.usersGrid.mediaItemRenderer.noAudio') : 
+									(voiceMuted ? ResourceUtil.getInstance().getString('bbb.users.usersGrid.mediaItemRenderer.micOff') : 
+												  ResourceUtil.getInstance().getString('bbb.users.usersGrid.mediaItemRenderer.micOn')));
 		}
 		 
 		private var _status:StatusCollection = new StatusCollection();
@@ -219,7 +219,7 @@ package org.bigbluebutton.main.model.users
 			n.authToken = user.authToken;
 			n.me = user.me;
 			n.userID = user.userID;
-      n.externUserID = user.externUserID;
+			n.externUserID = user.externUserID;
 			n.name = user.name;
 			n.hasStream = user.hasStream;
 			n.streamName = user.streamName;
@@ -227,6 +227,15 @@ package org.bigbluebutton.main.model.users
 			n.raiseHand = user.raiseHand;
 			n.role = user.role;	
 			n.room = user.room;
+			n.customdata = user.customdata;
+			n.media = user.media;
+			n.phoneUser = user.phoneUser;
+			n.talking = user.talking;
+			n.userStatus = user.userStatus;
+			n.voiceJoined = user.voiceJoined;
+			n.voiceLocked = user.voiceLocked;
+			n.voiceMuted = user.voiceMuted;
+			n.voiceUserid = user.voiceUserid;
 			
 			return n;		
 		}

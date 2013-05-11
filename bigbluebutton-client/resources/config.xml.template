@@ -3,19 +3,21 @@
     <localeversion suppressWarning="false">0.8</localeversion>
     <version>VERSION</version>
     <help url="http://HOST/help.html"/>
-    <porttest host="HOST" application="video" timeout="10000"/>    
+    <porttest host="HOST" application="video/portTest" timeout="10000"/>    
+    <bwMon server="HOST" application="video/bwTest"/>
     <application uri="rtmp://HOST/bigbluebutton" host="http://HOST/bigbluebutton/api/enter" />
     <language userSelectionEnabled="true" />
     <skinning enabled="true" url="http://HOST/client/branding/css/BBBDefault.css.swf" />
-    <shortcutKeys userSelectionEnabled="true" />
+    <shortcutKeys showButton="true" />
     <layout showLogButton="false" showVideoLayout="false" showResetLayout="true" defaultLayout="Default"
-            showToolbar="true" showFooter="true" showHelpButton="true" showLogoutWindow="true"/>
+            showToolbar="true" showFooter="true" showHelpButton="true" showLogoutWindow="true" 
+            showLayoutTools="true" showNetworkMonitor="false" />
             
 		<modules>
 		 
 		<module name="ChatModule" url="http://HOST/client/ChatModule.swf?v=VERSION" 
 			uri="rtmp://HOST/bigbluebutton" 
-			dependsOn="ViewersModule"	
+			dependsOn="UsersModule"	
 			translationOn="false"
 			translationEnabled="false"	
 			privateEnabled="true"  
@@ -23,6 +25,7 @@
 			baseTabIndex="701"
 		/>
 		
+<!--		
 		<module name="ViewersModule" url="http://HOST/client/ViewersModule.swf?v=VERSION" 
 			uri="rtmp://HOST/bigbluebutton" 
 			host="http://HOST/bigbluebutton/api/enter"
@@ -36,12 +39,12 @@
 			position="bottom-left"
 			baseTabIndex="301"
 		/>
+-->
 
-<!--		
-		<module name="ParticipantsModule" url="http://HOST/client/ParticipantsModule.swf?v=VERSION" 
+		<module name="UsersModule" url="http://HOST/client/UsersModule.swf?v=VERSION" 
 			uri="rtmp://HOST/bigbluebutton" 
 		/>
--->
+
 		
 		<module name="DeskShareModule" 
 			url="http://HOST/client/DeskShareModule.swf?v=4105" 
@@ -57,12 +60,12 @@
 			skipCheck="false"
 			showButton="true"
 			enabledEchoCancel="true"
-			dependsOn="ViewersModule"
+			dependsOn="UsersModule"
 		/>
 
 		<module name="VideoconfModule" url="http://HOST/client/VideoconfModule.swf?v=VERSION" 
 			uri="rtmp://HOST/video"
-			dependson = "ViewersModule"
+			dependson = "UsersModule"
 			videoQuality = "100"
 			presenterShareOnly = "false"
 			controlsForPresenter = "false"
@@ -85,7 +88,10 @@
 			enableH264 = "true"
 			h264Level = "2.1"
 			h264Profile = "main"		
-			displayAvatar = "false"	
+			displayAvatar = "false"
+			focusTalking = "false"
+			glowColor = "0x4A931D"
+			glowBlurSize = "30.0"	
 		/>
 		
 		<module name="WhiteboardModule" url="http://HOST/client/WhiteboardModule.swf?v=4105" 
@@ -106,13 +112,14 @@
 			host="http://HOST" 
 			showPresentWindow="true"
 			showWindowControls="true"
-			dependsOn="ViewersModule"
+			dependsOn="UsersModule"
 			baseTabIndex="501"
+			maxFileSize="30"
 		/>
 
 		<module name="VideodockModule" url="http://HOST/client/VideodockModule.swf?v=VERSION"
 			uri="rtmp://HOST/bigbluebutton" 
-			dependsOn="VideoconfModule, ViewersModule"
+			dependsOn="VideoconfModule, UsersModule"
 			autoDock="true"
 			showControls="true"
 			maximizeWindow="false"
@@ -127,7 +134,7 @@
 		<module name="LayoutModule" url="http://HOST/client/LayoutModule.swf?v=VERSION"
 			uri="rtmp://HOST/bigbluebutton"
 			layoutConfig="http://HOST/client/conf/layout.xml"
-			enableEdit="true"
+			enableEdit="false"
 		/>
 
 <!--
@@ -142,7 +149,7 @@
       position="top-left"
       showStreams="true"
       autoPlay="false"
-      dependsOn="ViewersModule"
+      dependsOn="UsersModule"
     />
 -->
     		

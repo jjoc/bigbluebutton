@@ -145,7 +145,7 @@ DataGrid {
   icon: Embed('assets/images/triangle.png');    
 }
 
-.presentationUploadButtonStyle, .presentationBackButtonStyle, .presentationForwardButtonStyle,
+.presentationUploadButtonStyle, .presentationBackButtonStyle, .presentationBackButtonDisabledStyle, .presentationForwardButtonStyle, .presentationForwardButtonDisabledStyle,
 .presentationFitToWidthButtonStyle, .presentationFitToPageButtonStyle 
 {
   textIndent: 0;
@@ -173,8 +173,16 @@ DataGrid {
   icon:   Embed('assets/images/left-arrow.png'); 
 }
 
+.presentationBackButtonDisabledStyle {
+	icon:   Embed('assets/images/left-arrow-disabled.png'); 
+}
+
 .presentationForwardButtonStyle {
   icon:   Embed('assets/images/right-arrow.png'); 
+}
+
+.presentationForwardButtonDisabledStyle {
+	icon:   Embed('assets/images/right-arrow-disabled.png'); 
 }
 
 .presentationFitToWidthButtonStyle {
@@ -288,7 +296,7 @@ DataGrid {
 
 .presentationUploadCancelButtonStyle {
   fillAlphas: 1, 1, 1, 1;
-  fillColors: #ff0000, #ff0000, #ffffff, #eeeeee;
+  fillColors: #fefeff, #e1e2e5, #ffffff, #eeeeee;
   color: #5e5f63;
   textRollOverColor: #5e5f63;
   textSelectedColor: #5e5f63;
@@ -364,8 +372,7 @@ DataGrid {
   fontSize: 12;    
 }
 
-.micSettingsWindowPlaySoundButtonStyle, .micSettingsWindowChangeMicButtonStyle, 
-.micSettingsWindowJoinButtonStyle {
+.micSettingsWindowPlaySoundButtonStyle, .micSettingsWindowChangeMicButtonStyle {
   fillAlphas: 1, 1, 1, 1;
   fillColors: #fefeff, #e1e2e5, #ffffff, #eeeeee;
   rollOverColor: #eeeeee;
@@ -374,6 +381,18 @@ DataGrid {
   textSelectedColor: #5e5f63;
   borderColor: #b9babc;  
   cornerRadius: 5;      
+}
+
+.micSettingsWindowJoinButtonStyle {
+	fillAlphas: 1, 1, 1, 1;
+	fillColors: #fefeff, #e1e2e5, #ffffff, #eeeeee;
+	rollOverColor: #eeeeee;
+	color: #5e5f63;
+	textRollOverColor: #5e5f63;
+	textSelectedColor: #5e5f63;
+	borderColor: #b9babc;  
+	cornerRadius: 5; 
+	icon:   Embed('assets/images/headset.png');
 }
 
 .micSettingsWindowCancelButtonStyle {
@@ -395,70 +414,54 @@ DataGrid {
   icon:   Embed('assets/images/questionmark.png');
 }
 
-MDIWindow {
-  
+MDIWindow { /*None of the following properties are overridden by the MDIWindow class*/
+	backgroundSize: '100%';
+	
+	cornerRadius: 5;
+	dropShadowEnabled: false;
+	titleStyleName: "mypanelTitle";
+	
+	cornerResizeImg: Embed(source="assets/swf/Blue.swf", symbol="Corner_Resize");
+	cornerResizeWidth: 2;
+	cornerResizeHeight: 2;
+	cornerResizePaddingRight: 2;
+	cornerResizePaddingBottom: 2;
+	
+	controlButtonWidth: 10;
+	controlButtonHeight: 10;
+	controlButtonGap: 4;
 }
 
 .mdiWindowFocus, .presentationWindowStyleFocus, .videoDockStyleFocus
 {
   headerHeight: 26;
   roundedBottomCorners: true;
-  backgroundAlpha: 1;
   backgroundColor: #b9babc;
-  backgroundSize: '100%';
+  backgroundAlpha: 1;
   
   borderStyle: solid;
   borderColor: #b9babc;
   borderAlpha: 1;
-  borderThickness: 1;
-  borderThicknessLeft: 1;
-  borderThicknessTop: 1;
-  borderThicknessBottom: 1;
-  borderThicknessRight: 1;
-  cornerRadius: 0;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
-  
-  cornerResizeImg: Embed(source="assets/swf/Blue.swf", symbol="Corner_Resize");
-  cornerResizeWidth: 2;
-  cornerResizeHeight: 2;
-  cornerResizePaddingRight: 2;
-  cornerResizePaddingBottom: 2;
-  
-  controlButtonWidth: 10;
-  controlButtonHeight: 10;
-  controlButtonGap: 4;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .mdiWindowNoFocus, .presentationWindowStyleNoFocus, .videoDockStyleNoFocus
 {
   headerHeight: 26;
-  roundedBottomCorners: false;
-  backgroundAlpha: 0.5;
+  roundedBottomCorners: true;
   backgroundColor: #b9babc;
-  backgroundSize: '100%';
-  
+  backgroundAlpha: 0.5;
+	
   borderStyle: solid;
   borderColor: #b9babc;
   borderAlpha: 0.5;
-  borderThickness: 1;
-  borderThicknessLeft: 1;
-  borderThicknessTop: 1;
-  borderThicknessBottom: 1;
-  borderThicknessRight: 1;
-  cornerRadius: 0;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
-  
-  cornerResizeImg: Embed(source="assets/swf/Blue.swf", symbol="Corner_Resize");
-  cornerResizeWidth: 2;
-  cornerResizeHeight: 2;
-  cornerResizePaddingRight: 2;
-  cornerResizePaddingBottom: 2;
-  
-  controlButtonWidth: 10;
-  controlButtonHeight: 10;
-  controlButtonGap: 4;
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .presentationSlideViewStyle {
@@ -477,110 +480,105 @@ MDIWindow {
 
 .videoViewStyleNoFocus 
 {
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 0.5;
+  
+  borderStyle: solid;
   borderColor: #b9babc;
   borderAlpha: 0.5;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 0.5;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .videoViewStyleFocus 
 {
+  headerHeight: 20;
+  roundedBottomCorners: true;
+  backgroundColor: #e6e6e6;
+  backgroundAlpha: 1;
+	
+  borderStyle: solid;
   borderColor: #b9babc;
   borderAlpha: 1;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 1;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+  borderThicknessLeft: 3;
+  borderThicknessTop: 0;
+  borderThicknessBottom: 3;
+  borderThicknessRight: 3;
 }
 
 .videoPublishStyleNoFocus 
 {
-  borderColor: #b9babc;
-  borderAlpha: 0.5;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 0.5;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+	headerHeight: 20;
+	roundedBottomCorners: true;
+	backgroundColor: #e6e6e6;
+	backgroundAlpha: 0.5;
+	
+	borderStyle: solid;
+	borderColor: #b9babc;
+	borderAlpha: 0.5;
+	borderThicknessLeft: 3;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 3;
+	borderThicknessRight: 3;
 }
 
 .videoPublishStyleFocus 
 {
-  borderColor: #b9babc;
-  borderAlpha: 1;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 1;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+	headerHeight: 20;
+	roundedBottomCorners: true;
+	backgroundColor: #e6e6e6;
+	backgroundAlpha: 1;
+	
+	borderStyle: solid;
+	borderColor: #b9babc;
+	borderAlpha: 1;
+	borderThicknessLeft: 3;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 3;
+	borderThicknessRight: 3;
 }
 
 .videoAvatarStyleNoFocus 
 {
-  borderColor: #b9babc;
-  borderAlpha: 0.5;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 0.5;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+	headerHeight: 20;
+	roundedBottomCorners: true;
+	backgroundColor: #e6e6e6;
+	backgroundAlpha: 0.5;
+	
+	borderStyle: solid;
+	borderColor: #b9babc;
+	borderAlpha: 0.5;
+	borderThicknessLeft: 3;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 3;
+	borderThicknessRight: 3;
 }
 
 .videoAvatarStyleFocus 
 {
-  borderColor: #b9babc;
-  borderAlpha: 1;
-  borderThicknessLeft: 5;
-  borderThicknessTop: 5;
-  borderThicknessBottom: 5;
-  borderThicknessRight: 5;
-  roundedBottomCorners: true;
-  cornerRadius: 5;
-  headerHeight: 20;
-  backgroundColor: #b9babc;
-  backgroundAlpha: 1;
-  dropShadowEnabled: false;
-  titleStyleName: "mypanelTitle";
+	headerHeight: 20;
+	roundedBottomCorners: true;
+	backgroundColor: #e6e6e6;
+	backgroundAlpha: 1;
+	
+	borderStyle: solid;
+	borderColor: #b9babc;
+	borderAlpha: 1;
+	borderThicknessLeft: 3;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 3;
+	borderThicknessRight: 3;
 }
 
 .mypanelTitle {
   color: #5e5f63;
   fontFamily: Arial;
   fontSize: 12;
+  fontWeight: bold;
 }
 
 .closeBtnFocus, .closeBtnNoFocus

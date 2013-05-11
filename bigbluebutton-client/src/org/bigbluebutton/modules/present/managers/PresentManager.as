@@ -50,7 +50,9 @@ package org.bigbluebutton.modules.present.managers
 		}
 		
 		public function handleStartModuleEvent(e:PresentModuleEvent):void{
-			if (presentWindow != null) return;
+			if (presentWindow != null){ 
+				return;
+			}
 			presentWindow = new PresentationWindow();
 			presentWindow.visible = (e.data.showPresentWindow == "true");
 			presentWindow.showControls = (e.data.showWindowControls == "true");
@@ -61,10 +63,10 @@ package org.bigbluebutton.modules.present.managers
 			presentWindow.close();
 		}
 		
-		private function openWindow(window:IBbbModuleWindow):void{				
+		private function openWindow(window:IBbbModuleWindow):void{
 			var event:OpenWindowEvent = new OpenWindowEvent(OpenWindowEvent.OPEN_WINDOW_EVENT);
 			event.window = window;
-			globalDispatcher.dispatchEvent(event);		
+			globalDispatcher.dispatchEvent(event);
 		}
 	
 		public function handleOpenUploadWindow(e:UploadEvent):void{
@@ -72,7 +74,8 @@ package org.bigbluebutton.modules.present.managers
 			
 			uploadWindow = new FileUploadWindow();
 			uploadWindow.presentationNamesAC = presentationNames;
-			mx.managers.PopUpManager.addPopUp(uploadWindow, presentWindow, false);
+			uploadWindow.maxFileSize = e.maxFileSize;
+			mx.managers.PopUpManager.addPopUp(uploadWindow, presentWindow, true);
 		}
 		
 		public function handleCloseUploadWindow():void{
